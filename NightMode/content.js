@@ -1,24 +1,30 @@
+var color = localStorage.bgColor;
+var input;
+var divs;
+
 window.onload=function(){
-document.getElementById("button1").addEventListener('click', saveSetchangeColor);
-document.getElementById("button2").addEventListener('click', loadSet);
-}
-
-
-function saveSetchangeColor(){
-	var color = document.getElementById("backgroundColor").value
-	localStorage.Bcolor=color;
-	var html = document.getElementsByTagName('html')[0];
-	html.style.setProperty("--color", localStorage.Bcolor)
-	console.log("Success")
-    };
-
-function loadSet(){
-	var lastColor = localStorage.Bcolor;
-
-	if (lastColor == "White"){
-		console.log("White")
+	console.log(color);
+	document.body.style.background = color;
+	divs = document.getElementsByTagName("div");
+	for(var i=0;i<divs.length;i++){
+		divs[i].style.background = color;	
 	}
-
+	
+	
+	input = document.createElement("input");
+	document.getElementById("yt-masthead-content").appendChild(input); 
+	input.type = "color";
+	input.value = "#000000"
+	input.addEventListener("change", setBgColor)
 }
 
+function setBgColor(){
+	color = input.value;
+	console.log(color);
+	document.body.style.background = color;
+	for(var i=0;i<divs.length;i++){
+		divs[i].style.background = color;	
+	}	
+	localStorage.bgColor = color;
+}
 
