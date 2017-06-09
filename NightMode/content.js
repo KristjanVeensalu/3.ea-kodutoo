@@ -1,24 +1,46 @@
 var color = localStorage.bgColor;
-var input;
-var divs;
-var links;
+var textColor = "black";
+var input = document.createElement("input");
+var divs = document.getElementsByTagName("div");
+var links = document.getElementsByClassName("spf-link");
+var title = document.getElementById("eow-title");
+var comments = document.getElementsByClassName("comment-section-renderer-items");
 
 window.onload=function(){
-	console.log(color);
-	console.log("rgb("+Math.round(128-((hexToRgb(color).r/2)))+", "+Math.round(128-((hexToRgb(color).g/2)))+", "+Math.round(128-((hexToRgb(color).b/2)))+")");
-	links = document.getElementsByClassName("spf-link");
+	createElement();
+	start();
+}
+
+function start(){
+	getTextColor();
+	
 	for(var i=0;i<links.length;i++){
 		links[i].style.background = color;	
-		links[i].style.color = "rgb("+Math.round(128-((hexToRgb(color).r/2)))+", "+Math.round(128-((hexToRgb(color).g/2)))+", "+Math.round(128-((hexToRgb(color).b/2)))+")";	
+		links[i].style.color = textColor;	
+	}
+	if(title != null){
+		title.style.color = textColor;
+	}
+	for(var i=0;i<comments.length;i++){
+		comments[i].style.color = textColor;
 	}
 	document.body.style.background = color;
-	divs = document.getElementsByTagName("div");
 	for(var i=0;i<divs.length;i++){
 		divs[i].style.background = color;	
 	}
-	
-	
-	input = document.createElement("input");
+}
+
+function getTextColor(){
+	var rgbSum = hexToRgb(color).r+hexToRgb(color).g+hexToRgb(color).b;
+	console.log(rgbSum);
+	if(rgbSum<360){
+		textColor = "white";
+	}else{
+		textColor = "black";
+	}
+}
+
+function createElement(){
 	document.getElementById("yt-masthead-content").appendChild(input); 
 	input.type = "color";
 	input.value = "#000000"
@@ -27,16 +49,23 @@ window.onload=function(){
 
 function setBgColor(){
 	color = input.value;
+	getTextColor();
 	for(var i=0;i<links.length;i++){
 		links[i].style.background = color;
-		links[i].style.color = "rgb("+Math.round(128-((hexToRgb(color).r/2)))+", "+Math.round(128-((hexToRgb(color).g/2)))+", "+Math.round(128-((hexToRgb(color).b/2)))+")";	
+		links[i].style.color = textColor;	
+	}
+	if(title != null){
+		title.style.color = textColor;
+	}
+	if(comments != null){
+		for(var i=0;i<comments.length;i++){
+			comments[i].style.color = textColor;
+		}
 	}
 	document.body.style.background = color;
 	for(var i=0;i<divs.length;i++){
 		divs[i].style.background = color;	
 	}
-	console.log(color);
-	console.log("rgb("+Math.round(128-((hexToRgb(color).r/2)))+", "+Math.round(128-((hexToRgb(color).g/2)))+", "+Math.round(128-((hexToRgb(color).b/2)))+")");
 	localStorage.bgColor = color;
 }
 
